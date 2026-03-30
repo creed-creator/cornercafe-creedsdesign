@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corner Cafe | Decatur, Indiana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #c9974a;
+    --cream: #fdf6ec;
+    --dark: #1a1208;
+    --brown: #3d2b1f;
+    --mid: #6b4c35;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(26,18,8,0.88);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff; letter-spacing: 1px; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+  .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(26,18,8,0.97); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; text-decoration: none; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 5%; font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 100vh; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+  }
+  .hero-slides { position: absolute; inset: 0; }
+  .hero-slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1.2s ease;
+    animation: kenBurns 10s ease-in-out infinite;
+  }
+  .hero-slide.active { opacity: 1; }
+  @keyframes kenBurns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+  }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%); }
+  .hero-content { position: relative; z-index: 2; padding: 0 1rem; }
+  .hero-tag {
+    display: inline-block; border: 1px solid var(--gold); color: var(--gold);
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 20px; margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6rem);
+    color: #fff; line-height: 1.1; margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 480px; margin: 0 auto 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 1.1s forwards; }
+  .btn-primary {
+    background: var(--gold); color: #fff; padding: 14px 32px;
+    border-radius: 30px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    letter-spacing: 0.5px; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,151,74,0.45); }
+  .btn-outline {
+    border: 2px solid rgba(255,255,255,0.7); color: #fff; padding: 13px 32px;
+    border-radius: 30px; font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    letter-spacing: 0.5px; transition: all 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.15); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* STATS */
+  .stats {
+    background: var(--brown); display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 0;
+  }
+  .stat {
+    flex: 1; min-width: 160px; padding: 2.5rem 1rem; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    opacity: 0; transform: translateY(20px); transition: all 0.6s;
+  }
+  .stat.visible { opacity: 1; transform: none; }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; }
+  .section-tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--dark); line-height: 1.2; margin-bottom: 1.2rem; }
+  .section-title span { color: var(--gold); }
+
+  /* ABOUT */
+  .about { background: #fff; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .about-img-wrap { position: relative; }
+  .about-img-frame {
+    width: 100%; aspect-ratio: 4/3;
+    background-size: cover; background-position: center;
+    border-radius: 4px; box-shadow: 12px 16px 0 var(--gold);
+    transition: transform 0.4s;
+  }
+  .about-img-frame:hover { transform: translate(-4px,-4px); }
+  .feature-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .feature-card {
+    background: var(--cream); border-radius: 8px; padding: 1.2rem;
+    border-top: 3px solid var(--gold); transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .feature-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.4rem; }
+  .feature-card p { font-size: 0.82rem; color: var(--mid); line-height: 1.5; }
+
+  /* GALLERY */
+  .gallery { background: var(--cream); }
+  .gallery-title { text-align: center; max-width: 500px; margin: 0 auto 3rem; }
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 12px; max-width: 1100px; margin: 0 auto;
+  }
+  .mosaic-item {
+    overflow: hidden; border-radius: 4px; cursor: pointer;
+    opacity: 0; transform: scale(0.95); transition: opacity 0.5s, transform 0.5s;
+  }
+  .mosaic-item.visible { opacity: 1; transform: scale(1); }
+  .mosaic-item:nth-child(1) { grid-column: span 2; }
+  .mosaic-item:nth-child(4) { grid-column: span 2; }
+  .mosaic-img {
+    width: 100%; height: 100%; min-height: 220px;
+    background-size: cover; background-position: center;
+    transition: transform 0.5s;
+  }
+  .mosaic-item:hover .mosaic-img { transform: scale(1.05); }
+
+  /* MENU */
+  .menu-section { background: #fff; }
+  .menu-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .tab-btn {
+    padding: 10px 24px; border-radius: 24px; border: 1.5px solid #ddd;
+    font-size: 0.85rem; font-weight: 500; cursor: pointer; background: #fff;
+    transition: all 0.2s; color: var(--mid); letter-spacing: 0.5px;
+  }
+  .tab-btn.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+  .menu-card {
+    background: var(--cream); border-radius: 10px; padding: 1.4rem;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 2px solid transparent; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .menu-card:hover { border-bottom-color: var(--gold); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.07); }
+  .menu-card-info h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.3rem; }
+  .menu-card-info p { font-size: 0.8rem; color: var(--mid); line-height: 1.4; max-width: 180px; }
+  .menu-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); white-space: nowrap; padding-left: 1rem; }
+
+  /* TESTIMONIAL */
+  .testimonial-section {
+    background: var(--dark); text-align: center; padding: 6rem 5%;
+  }
+  .testimonial-section .section-tag { color: var(--gold); }
+  .testimonial-section .section-title { color: #fff; max-width: 700px; margin: 0 auto 1rem; }
+  blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.7rem); color: rgba(255,255,255,0.9); max-width: 760px; margin: 2rem auto; line-height: 1.6; font-style: italic; }
+  .quote-author { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 1.5rem; }
+
+  /* CONTACT */
+  .contact-section { background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 3rem auto 0; }
+  .contact-card {
+    background: #fff; border-radius: 10px; padding: 2rem 1.5rem; text-align: center;
+    transition: transform 0.35s, box-shadow 0.35s; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .contact-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .contact-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .contact-card p, .contact-card a { font-size: 0.88rem; color: var(--mid); text-decoration: none; line-height: 1.6; }
+  .contact-card a:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2rem 5%; font-size: 0.78rem; letter-spacing: 0.5px;
+  }
+  footer strong { color: var(--gold); }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .feature-cards { grid-template-columns: 1fr; }
+    .mosaic { grid-template-columns: 1fr 1fr; }
+    .mosaic-item:nth-child(1), .mosaic-item:nth-child(4) { grid-column: span 2; }
+    section { padding: 4rem 5%; }
+  }
+  @media (max-width: 480px) {
+    .mosaic { grid-template-columns: 1fr; }
+    .mosaic-item:nth-child(1), .mosaic-item:nth-child(4) { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Corner Cafe</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#menu" class="mob-link">Menu</a>
+  <a href="#gallery" class="mob-link">Gallery</a>
+  <a href="#contact" class="mob-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image: url('photo1.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('photo3.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('photo4.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('photo7.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('photo8.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Decatur, Indiana</div>
+    <h1 class="hero-title">Corner Cafe</h1>
+    <p class="hero-sub">Homemade breakfast &amp; lunch made from scratch, right in the heart of Decatur.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">View Menu</a>
+      <a href="#contact" class="btn-outline">Find Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">4.7★</div><div class="stat-label">Google Rating</div></div>
+  <div class="stat"><div class="stat-num">Scratch</div><div class="stat-label">Made Fresh Daily</div></div>
+  <div class="stat"><div class="stat-num">Tue–Sun</div><div class="stat-label">Open This Week</div></div>
+  <div class="stat"><div class="stat-num">Local</div><div class="stat-label">Family Owned</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-frame" style="background-image: url('photo8.jpg')"></div>
+    </div>
+    <div class="reveal">
+      <p class="section-tag">Our Story</p>
+      <h2 class="section-title">A Little Spot with<br><span>Big Heart</span></h2>
+      <p style="color: var(--mid); line-height: 1.8; margin-bottom: 1.2rem;">Corner Cafe has been a Decatur staple for homemade breakfast and lunch. Every dish is made from scratch — the soups, the pies, the sauces. Nothing comes out of a bag here.</p>
+      <p style="color: var(--mid); line-height: 1.8;">Tucked on 13th Street, we're the kind of place where the owner knows your name and the food tastes like someone's kitchen — because it does.</p>
+      <div class="feature-cards">
+        <div class="feature-card"><h4>Made From Scratch</h4><p>Soups, pies, sauces — all homemade daily.</p></div>
+        <div class="feature-card"><h4>Breakfast All Day</h4><p>Eggs, pancakes, omelets whenever you want.</p></div>
+        <div class="feature-card"><h4>Daily Specials</h4><p>Fresh menu items that change every day.</p></div>
+        <div class="feature-card"><h4>Homemade Pies</h4><p>Rotating pie lineup baked in-house.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-title reveal">
+    <p class="section-tag">Food &amp; Atmosphere</p>
+    <h2 class="section-title">From Our <span>Kitchen</span></h2>
+  </div>
+  <div class="mosaic">
+    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo1.jpg'); min-height: 300px;"></div></div>
+    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo4.jpg');"></div></div>
+    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo3.jpg');"></div></div>
+    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo7.jpg'); min-height: 300px;"></div></div>
+    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo8.jpg');"></div></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="reveal" style="text-align:center; max-width: 500px; margin: 0 auto 2rem;">
+    <p class="section-tag">What We Serve</p>
+    <h2 class="section-title">Our <span>Menu</span></h2>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('breakfast',this)">Breakfast</button>
+    <button class="tab-btn" onclick="showTab('lunch',this)">Lunch</button>
+    <button class="tab-btn" onclick="showTab('salads',this)">Salads</button>
+    <button class="tab-btn" onclick="showTab('treats',this)">Baked Goods</button>
+  </div>
+
+  <div class="menu-panel active" id="breakfast">
+    <div class="menu-card"><div class="menu-card-info"><h4>Buttermilk Pancakes</h4><p>Fluffy scratch-made pancakes, golden and warm.</p></div><div class="menu-price">$8</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Breakfast Croissant</h4><p>Egg, melty cheese, ham or bacon on a flaky croissant.</p></div><div class="menu-price">$7</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Bacon, Spinach &amp; Feta Quiche</h4><p>Homemade quiche, baked fresh daily.</p></div><div class="menu-price">Market</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Breakfast Tacos</h4><p>Loaded with egg, cheese, and your choice of protein.</p></div><div class="menu-price">$9</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Classic Omelet</h4><p>Three-egg omelet with your choice of fillings.</p></div><div class="menu-price">$10</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Cinnamon Crunch Muffin</h4><p>Warm, fresh-baked in-house every morning.</p></div><div class="menu-price">$3</div></div>
+  </div>
+
+  <div class="menu-panel" id="lunch">
+    <div class="menu-card"><div class="menu-card-info"><h4>Kickin Chicken Sandwich</h4><p>Spicy fried chicken with fries.</p></div><div class="menu-price">$12</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Corner Burger</h4><p>Juicy beef patty with hand-cut fries or homemade slaw.</p></div><div class="menu-price">$12</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Grilled Cheese</h4><p>Amped-up grilled cheese with your choice of add-ons.</p></div><div class="menu-price">$8</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Soup of the Day</h4><p>Homemade daily — chicken &amp; rice, cheesy cabbage, chili &amp; more.</p></div><div class="menu-price">$5</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Chicken Strip Basket</h4><p>Hand-breaded strips with fries.</p></div><div class="menu-price">$10</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Chicken &amp; Noodles</h4><p>Homemade comfort — served with mashed potatoes and peas.</p></div><div class="menu-price">Special</div></div>
+  </div>
+
+  <div class="menu-panel" id="salads">
+    <div class="menu-card"><div class="menu-card-info"><h4>Oriental Chicken Salad</h4><p>Fresh greens, grilled chicken, crispy wonton, sesame dressing.</p></div><div class="menu-price">$13</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Chicken Bacon Ranch Salad</h4><p>Fresh greens, grilled chicken, bacon, cheddar, homemade ranch.</p></div><div class="menu-price">$13</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Garden Salad</h4><p>Fresh mixed greens with your choice of dressing.</p></div><div class="menu-price">$7</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Cabbage Roll Soup + Salad</h4><p>4-cup soup with garden salad and 2 rolls. Feeds two.</p></div><div class="menu-price">$20</div></div>
+  </div>
+
+  <div class="menu-panel" id="treats">
+    <div class="menu-card"><div class="menu-card-info"><h4>Homemade Pie</h4><p>Rotating lineup — rhubarb, seasonal fruits &amp; more.</p></div><div class="menu-price">Slice</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Triple Chocolate Cake</h4><p>Rich, decadent, made in-house.</p></div><div class="menu-price">Market</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Buttermilk Drop Donuts</h4><p>Warm, fresh, homemade.</p></div><div class="menu-price">Daily</div></div>
+    <div class="menu-card"><div class="menu-card-info"><h4>Cinnamon Crunch Muffins</h4><p>Baked fresh every morning.</p></div><div class="menu-price">$3</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <p class="section-tag">What People Say</p>
+  <h2 class="section-title reveal" style="color:#fff;">Guests Love It Here</h2>
+  <blockquote class="reveal">"One of the best meals I've had — homemade food the way it used to be. The pies alone are worth the trip."</blockquote>
+  <p class="quote-author">— Google Reviewer</p>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div style="text-align:center;" class="reveal">
+    <p class="section-tag">Come See Us</p>
+    <h2 class="section-title">Find <span>Corner Cafe</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <div class="contact-icon">📍</div>
+      <h4>Address</h4>
+      <a href="https://www.google.com/maps/search/?api=1&query=105+N+13th+St+Decatur+IN+46733" target="_blank">105 N 13th St<br>Decatur, IN 46733</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">📞</div>
+      <h4>Phone</h4>
+      <a href="tel:+12602230244">(260) 223-0244</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">🕐</div>
+      <h4>Hours</h4>
+      <p>Tue – Sat: 7am – 2pm<br>Sunday: 7am – 2pm<br>Monday: Closed</p>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">📱</div>
+      <h4>Follow Along</h4>
+      <a href="https://www.facebook.com/cornercafe.decatur" target="_blank">Facebook</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <strong>Corner Cafe</strong> &mdash; Decatur, Indiana</p>
+</footer>
+
+<script>
+  // NAV scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+  // Mobile menu
+  document.getElementById('hamburger').onclick = () => document.getElementById('mobileMenu').classList.add('open');
+  document.getElementById('mobileClose').onclick = () => document.getElementById('mobileMenu').classList.remove('open');
+  document.querySelectorAll('.mob-link').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.remove('open'));
+
+  // Hero slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 5000);
+
+  // Menu tabs
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal, .stat, .mosaic-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
