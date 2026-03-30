@@ -1,384 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Corner Cafe | Decatur, Indiana</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --gold: #c9974a;
-    --cream: #fdf6ec;
-    --dark: #1a1208;
-    --brown: #3d2b1f;
-    --mid: #6b4c35;
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#c8a96e;
+    --dark:#1a1a1a;
+    --warm:#2b1f14;
+    --cream:#f9f5ef;
+    --text:#3a3028;
   }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
 
   /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 70px;
-    transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:18px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:background .4s,backdrop-filter .4s,box-shadow .4s;
   }
-  nav.scrolled {
-    background: rgba(26,18,8,0.88);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  nav.scrolled{
+    background:rgba(26,18,10,.88);
+    backdrop-filter:blur(12px);
+    box-shadow:0 2px 20px rgba(0,0,0,.3);
   }
-  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff; letter-spacing: 1px; text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold); }
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
-  .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(26,18,8,0.97); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; text-decoration: none; transition: color 0.2s; }
-  .mobile-menu a:hover { color: var(--gold); }
-  .mobile-close { position: absolute; top: 1.5rem; right: 5%; font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none; }
+  .nav-logo{font-family:'Playfair Display',serif;color:#fff;font-size:1.4rem;font-weight:700;letter-spacing:.5px}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;transition:color .2s}
+  .nav-links a:hover{color:var(--gold)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+  .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+  .mobile-menu{
+    display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(26,18,10,.97);z-index:99;
+    flex-direction:column;align-items:center;justify-content:center;gap:36px;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{color:#fff;font-size:1.4rem;font-family:'Playfair Display',serif;text-decoration:none}
+  .mobile-close{position:absolute;top:24px;right:32px;color:#fff;font-size:2rem;cursor:pointer;background:none;border:none}
 
   /* HERO */
-  .hero {
-    position: relative; height: 100vh; overflow: hidden;
-    display: flex; align-items: center; justify-content: center; text-align: center;
+  .hero{
+    height:100vh;position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
   }
-  .hero-slides { position: absolute; inset: 0; }
-  .hero-slide {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-    opacity: 0; transition: opacity 1.2s ease;
-    animation: kenBurns 10s ease-in-out infinite;
+  .hero-slide{
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    animation:kenburns 8s ease-in-out infinite alternate;
+    transition:opacity 1.2s;
+    opacity:0;
   }
-  .hero-slide.active { opacity: 1; }
-  @keyframes kenBurns {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.08); }
+  .hero-slide.active{opacity:1}
+  @keyframes kenburns{
+    0%{transform:scale(1) translate(0,0)}
+    100%{transform:scale(1.08) translate(-1%,-1%)}
   }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%); }
-  .hero-content { position: relative; z-index: 2; padding: 0 1rem; }
-  .hero-tag {
-    display: inline-block; border: 1px solid var(--gold); color: var(--gold);
-    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-    padding: 6px 18px; border-radius: 20px; margin-bottom: 1.5rem;
-    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.38) 0%,rgba(0,0,0,.55) 100%)}
+  .hero-content{
+    position:relative;z-index:2;text-align:center;color:#fff;
+    padding:0 20px;
+    animation:fadeUp .9s ease both;animation-delay:.3s;
   }
-  .hero-title {
-    font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6rem);
-    color: #fff; line-height: 1.1; margin-bottom: 1.2rem;
-    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero-eyebrow{font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1.05;margin-bottom:20px}
+  .hero-sub{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.82);margin-bottom:36px;letter-spacing:.3px}
+  .hero-btn{
+    display:inline-block;padding:14px 36px;
+    border:2px solid var(--gold);color:#fff;text-decoration:none;
+    font-size:.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+    transition:all .3s;
   }
-  .hero-sub {
-    font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 480px; margin: 0 auto 2rem;
-    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
-  }
-  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 1.1s forwards; }
-  .btn-primary {
-    background: var(--gold); color: #fff; padding: 14px 32px;
-    border-radius: 30px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
-    letter-spacing: 0.5px; transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,151,74,0.45); }
-  .btn-outline {
-    border: 2px solid rgba(255,255,255,0.7); color: #fff; padding: 13px 32px;
-    border-radius: 30px; font-weight: 500; font-size: 0.9rem; text-decoration: none;
-    letter-spacing: 0.5px; transition: all 0.2s;
-  }
-  .btn-outline:hover { background: rgba(255,255,255,0.15); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-btn:hover{background:var(--gold);color:var(--dark)}
 
-  /* STATS */
-  .stats {
-    background: var(--brown); display: flex; flex-wrap: wrap;
-    justify-content: center; gap: 0;
-  }
-  .stat {
-    flex: 1; min-width: 160px; padding: 2.5rem 1rem; text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.1);
-    opacity: 0; transform: translateY(20px); transition: all 0.6s;
-  }
-  .stat.visible { opacity: 1; transform: none; }
-  .stat:last-child { border-right: none; }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); }
-  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  /* SECTION BASE */
+  section{padding:80px 40px}
+  .section-label{font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px}
+  .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--dark);line-height:1.2;margin-bottom:20px}
+  .divider{width:48px;height:3px;background:var(--gold);margin-bottom:32px}
+  .section-body{font-size:.98rem;line-height:1.85;color:#5a4e44;max-width:600px}
 
-  /* SECTIONS */
-  section { padding: 6rem 5%; }
-  .section-tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--dark); line-height: 1.2; margin-bottom: 1.2rem; }
-  .section-title span { color: var(--gold); }
+  /* STATS STRIP */
+  .stats{background:var(--warm);padding:48px 40px;display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);font-weight:700}
+  .stat-label{font-size:.75rem;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:6px}
 
   /* ABOUT */
-  .about { background: #fff; }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
-  .about-img-wrap { position: relative; }
-  .about-img-frame {
-    width: 100%; aspect-ratio: 4/3;
-    background-size: cover; background-position: center;
-    border-radius: 4px; box-shadow: 12px 16px 0 var(--gold);
-    transition: transform 0.4s;
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
+  .about-img-wrap{position:relative}
+  .about-img{width:100%;height:480px;object-fit:cover;display:block}
+  .about-frame{position:absolute;top:20px;left:20px;right:-20px;bottom:-20px;border:2px solid var(--gold);z-index:-1}
+  .feature-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+  .feature-card{
+    padding:18px;border:1px solid rgba(200,169,110,.25);
+    transition:transform .3s,box-shadow .3s,border-color .3s;cursor:default;
   }
-  .about-img-frame:hover { transform: translate(-4px,-4px); }
-  .feature-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-  .feature-card {
-    background: var(--cream); border-radius: 8px; padding: 1.2rem;
-    border-top: 3px solid var(--gold); transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .feature-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.4rem; }
-  .feature-card p { font-size: 0.82rem; color: var(--mid); line-height: 1.5; }
+  .feature-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:var(--gold)}
+  .feature-icon{font-size:1.4rem;margin-bottom:8px}
+  .feature-card h4{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--dark);margin-bottom:4px}
+  .feature-card p{font-size:.8rem;color:#7a6e64;line-height:1.6}
 
   /* GALLERY */
-  .gallery { background: var(--cream); }
-  .gallery-title { text-align: center; max-width: 500px; margin: 0 auto 3rem; }
-  .mosaic {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    gap: 12px; max-width: 1100px; margin: 0 auto;
+  .gallery-section{background:var(--cream);padding:80px 40px}
+  .gallery-header{text-align:center;margin-bottom:48px}
+  .gallery-header .section-body{margin:0 auto;text-align:center}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:auto auto;
+    gap:12px;max-width:1100px;margin:0 auto;
   }
-  .mosaic-item {
-    overflow: hidden; border-radius: 4px; cursor: pointer;
-    opacity: 0; transform: scale(0.95); transition: opacity 0.5s, transform 0.5s;
+  .gallery-item{overflow:hidden;position:relative}
+  .gallery-item:first-child{grid-column:span 2;grid-row:span 1}
+  .gallery-item img{
+    width:100%;height:280px;object-fit:cover;display:block;
+    transition:transform .5s ease;
   }
-  .mosaic-item.visible { opacity: 1; transform: scale(1); }
-  .mosaic-item:nth-child(1) { grid-column: span 2; }
-  .mosaic-item:nth-child(4) { grid-column: span 2; }
-  .mosaic-img {
-    width: 100%; height: 100%; min-height: 220px;
-    background-size: cover; background-position: center;
-    transition: transform 0.5s;
-  }
-  .mosaic-item:hover .mosaic-img { transform: scale(1.05); }
+  .gallery-item:first-child img{height:380px}
+  .gallery-item:hover img{transform:scale(1.06)}
 
   /* MENU */
-  .menu-section { background: #fff; }
-  .menu-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
-  .tab-btn {
-    padding: 10px 24px; border-radius: 24px; border: 1.5px solid #ddd;
-    font-size: 0.85rem; font-weight: 500; cursor: pointer; background: #fff;
-    transition: all 0.2s; color: var(--mid); letter-spacing: 0.5px;
+  .menu-section{max-width:1100px;margin:0 auto}
+  .menu-tabs{display:flex;gap:0;border-bottom:2px solid rgba(200,169,110,.25);margin-bottom:40px;flex-wrap:wrap}
+  .tab-btn{
+    padding:12px 28px;background:none;border:none;cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;
+    color:#9a8e84;font-weight:500;transition:color .2s;
+    border-bottom:3px solid transparent;margin-bottom:-2px;
   }
-  .tab-btn.active { background: var(--gold); border-color: var(--gold); color: #fff; }
-  .menu-panel { display: none; }
-  .menu-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-  .menu-card {
-    background: var(--cream); border-radius: 10px; padding: 1.4rem;
-    display: flex; justify-content: space-between; align-items: flex-start;
-    border-bottom: 2px solid transparent; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  .tab-btn.active{color:var(--dark);border-bottom-color:var(--gold)}
+  .tab-btn:hover{color:var(--dark)}
+  .tab-pane{display:none}
+  .tab-pane.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .menu-card{
+    padding:22px;border:1px solid rgba(200,169,110,.2);
+    transition:all .3s;
   }
-  .menu-card:hover { border-bottom-color: var(--gold); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.07); }
-  .menu-card-info h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.3rem; }
-  .menu-card-info p { font-size: 0.8rem; color: var(--mid); line-height: 1.4; max-width: 180px; }
-  .menu-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); white-space: nowrap; padding-left: 1rem; }
+  .menu-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(0,0,0,.07)}
+  .menu-card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .menu-card h4{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark)}
+  .menu-price{color:var(--gold);font-weight:600;font-size:.95rem;white-space:nowrap;margin-left:12px}
+  .menu-card p{font-size:.8rem;color:#7a6e64;line-height:1.6}
 
   /* TESTIMONIAL */
-  .testimonial-section {
-    background: var(--dark); text-align: center; padding: 6rem 5%;
-  }
-  .testimonial-section .section-tag { color: var(--gold); }
-  .testimonial-section .section-title { color: #fff; max-width: 700px; margin: 0 auto 1rem; }
-  blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.7rem); color: rgba(255,255,255,0.9); max-width: 760px; margin: 2rem auto; line-height: 1.6; font-style: italic; }
-  .quote-author { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 1.5rem; }
+  .testimonial{background:var(--dark);padding:80px 40px;text-align:center}
+  .quote-mark{font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);line-height:.5;margin-bottom:20px;opacity:.6}
+  .quote-text{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.9rem);color:#fff;max-width:780px;margin:0 auto 28px;line-height:1.5;font-style:italic}
+  .quote-author{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500}
 
   /* CONTACT */
-  .contact-section { background: var(--cream); }
-  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 3rem auto 0; }
-  .contact-card {
-    background: #fff; border-radius: 10px; padding: 2rem 1.5rem; text-align: center;
-    transition: transform 0.35s, box-shadow 0.35s; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  .contact-section{background:var(--cream);padding:80px 40px}
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:40px auto 0}
+  .contact-card{
+    background:#fff;padding:32px 24px;text-align:center;
+    border-bottom:3px solid transparent;
+    transition:transform .3s,box-shadow .3s,border-color .3s;
   }
-  .contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-  .contact-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-  .contact-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 0.5rem; }
-  .contact-card p, .contact-card a { font-size: 0.88rem; color: var(--mid); text-decoration: none; line-height: 1.6; }
-  .contact-card a:hover { color: var(--gold); }
+  .contact-card:hover{transform:translateY(-5px);box-shadow:0 8px 28px rgba(0,0,0,.09);border-color:var(--gold)}
+  .contact-icon{font-size:2rem;margin-bottom:14px}
+  .contact-card h4{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark);margin-bottom:10px}
+  .contact-card a{color:#6a5e54;text-decoration:none;font-size:.88rem;line-height:1.7;display:block;transition:color .2s}
+  .contact-card a:hover{color:var(--gold)}
 
   /* FOOTER */
-  footer {
-    background: var(--dark); color: rgba(255,255,255,0.5);
-    text-align: center; padding: 2rem 5%; font-size: 0.78rem; letter-spacing: 0.5px;
-  }
-  footer strong { color: var(--gold); }
+  footer{background:var(--dark);padding:32px 40px;text-align:center}
+  footer p{color:rgba(255,255,255,.4);font-size:.78rem;letter-spacing:.5px}
 
   /* SCROLL REVEAL */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
-  .reveal.visible { opacity: 1; transform: none; }
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
 
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .feature-cards { grid-template-columns: 1fr; }
-    .mosaic { grid-template-columns: 1fr 1fr; }
-    .mosaic-item:nth-child(1), .mosaic-item:nth-child(4) { grid-column: span 2; }
-    section { padding: 4rem 5%; }
-  }
-  @media (max-width: 480px) {
-    .mosaic { grid-template-columns: 1fr; }
-    .mosaic-item:nth-child(1), .mosaic-item:nth-child(4) { grid-column: span 1; }
+  /* MOBILE */
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+    section{padding:60px 20px}
+    .about{grid-template-columns:1fr;gap:40px}
+    .about-frame{display:none}
+    .stats{gap:40px}
+    .gallery-grid{grid-template-columns:1fr 1fr}
+    .gallery-item:first-child{grid-column:span 2}
+    .contact-grid{grid-template-columns:1fr}
+    .feature-cards{grid-template-columns:1fr}
+    .menu-tabs{gap:0}
+    .tab-btn{padding:10px 16px;font-size:.75rem}
   }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">Corner Cafe</a>
+<nav id="nav">
+  <div class="nav-logo">Corner Cafe</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="hamburger" id="hamburger">
+  <div class="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose">✕</button>
-  <a href="#about" class="mob-link">About</a>
-  <a href="#menu" class="mob-link">Menu</a>
-  <a href="#gallery" class="mob-link">Gallery</a>
-  <a href="#contact" class="mob-link">Contact</a>
+  <button class="mobile-close" onclick="toggleMenu()">&#215;</button>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#menu" onclick="toggleMenu()">Menu</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
 
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active" style="background-image: url('photo1.jpg')"></div>
-    <div class="hero-slide" style="background-image: url('photo3.jpg')"></div>
-    <div class="hero-slide" style="background-image: url('photo4.jpg')"></div>
-    <div class="hero-slide" style="background-image: url('photo7.jpg')"></div>
-    <div class="hero-slide" style="background-image: url('photo8.jpg')"></div>
-  </div>
+<div class="hero" id="hero">
+  <div class="hero-slide active" style="background-image:url('photo_1.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('photo_3.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('photo_4.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('photo_8.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag">Decatur, Indiana</div>
+    <p class="hero-eyebrow">Decatur, Indiana</p>
     <h1 class="hero-title">Corner Cafe</h1>
-    <p class="hero-sub">Homemade breakfast &amp; lunch made from scratch, right in the heart of Decatur.</p>
-    <div class="hero-btns">
-      <a href="#menu" class="btn-primary">View Menu</a>
-      <a href="#contact" class="btn-outline">Find Us</a>
-    </div>
+    <p class="hero-sub">Made from scratch. Served with heart.</p>
+    <a href="#menu" class="hero-btn">View Menu</a>
   </div>
-</section>
+</div>
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat"><div class="stat-num">4.7★</div><div class="stat-label">Google Rating</div></div>
-  <div class="stat"><div class="stat-num">Scratch</div><div class="stat-label">Made Fresh Daily</div></div>
-  <div class="stat"><div class="stat-num">Tue–Sun</div><div class="stat-label">Open This Week</div></div>
-  <div class="stat"><div class="stat-num">Local</div><div class="stat-label">Family Owned</div></div>
+  <div class="stat reveal"><div class="stat-num">9+</div><div class="stat-label">Years Serving Decatur</div></div>
+  <div class="stat reveal"><div class="stat-num">100%</div><div class="stat-label">Made From Scratch</div></div>
+  <div class="stat reveal"><div class="stat-num">4.6★</div><div class="stat-label">Community Rating</div></div>
 </div>
 
 <!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-grid">
+<section id="about">
+  <div class="about">
     <div class="about-img-wrap reveal">
-      <div class="about-img-frame" style="background-image: url('photo8.jpg')"></div>
+      <img class="about-img" src="photo_7.jpg" alt="Corner Cafe interior"/>
+      <div class="about-frame"></div>
     </div>
     <div class="reveal">
-      <p class="section-tag">Our Story</p>
-      <h2 class="section-title">A Little Spot with<br><span>Big Heart</span></h2>
-      <p style="color: var(--mid); line-height: 1.8; margin-bottom: 1.2rem;">Corner Cafe has been a Decatur staple for homemade breakfast and lunch. Every dish is made from scratch — the soups, the pies, the sauces. Nothing comes out of a bag here.</p>
-      <p style="color: var(--mid); line-height: 1.8;">Tucked on 13th Street, we're the kind of place where the owner knows your name and the food tastes like someone's kitchen — because it does.</p>
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Homemade food, a warm welcome</h2>
+      <div class="divider"></div>
+      <p class="section-body">Corner Cafe has been a staple of downtown Decatur since 2016. Everything on the menu is made from scratch — from the hand-breaded tenderloins to the homemade pies cooling on the counter. We're a small place with big flavor, and we're proud of every plate we put out.</p>
       <div class="feature-cards">
-        <div class="feature-card"><h4>Made From Scratch</h4><p>Soups, pies, sauces — all homemade daily.</p></div>
-        <div class="feature-card"><h4>Breakfast All Day</h4><p>Eggs, pancakes, omelets whenever you want.</p></div>
-        <div class="feature-card"><h4>Daily Specials</h4><p>Fresh menu items that change every day.</p></div>
-        <div class="feature-card"><h4>Homemade Pies</h4><p>Rotating pie lineup baked in-house.</p></div>
+        <div class="feature-card">
+          <div class="feature-icon">🥧</div>
+          <h4>Homemade Pies</h4>
+          <p>Baked fresh daily. Peach, cherry, blueberry peach combo, and more.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🥩</div>
+          <h4>Hand-Breaded Tenderloins</h4>
+          <p>The real deal. Made by hand, every single time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🥗</div>
+          <h4>Fresh Salads</h4>
+          <p>Oriental chicken, chicken bacon ranch — crisp and loaded.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☕</div>
+          <h4>Breakfast Done Right</h4>
+          <p>Croissant sandwiches, breakfast tacos, and more every morning.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <div class="gallery-title reveal">
-    <p class="section-tag">Food &amp; Atmosphere</p>
-    <h2 class="section-title">From Our <span>Kitchen</span></h2>
+<div class="gallery-section" id="gallery">
+  <div class="gallery-header reveal">
+    <p class="section-label">Our Food</p>
+    <h2 class="section-title">Fresh out of the kitchen</h2>
+    <div class="divider" style="margin:0 auto 20px"></div>
   </div>
-  <div class="mosaic">
-    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo1.jpg'); min-height: 300px;"></div></div>
-    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo4.jpg');"></div></div>
-    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo3.jpg');"></div></div>
-    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo7.jpg'); min-height: 300px;"></div></div>
-    <div class="mosaic-item"><div class="mosaic-img" style="background-image: url('photo8.jpg');"></div></div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item"><img src="photo_3.jpg" alt="Corner Cafe food"/></div>
+    <div class="gallery-item"><img src="photo_4.jpg" alt="Corner Cafe dish"/></div>
+    <div class="gallery-item"><img src="photo_8.jpg" alt="Corner Cafe interior"/></div>
+    <div class="gallery-item"><img src="photo_1.jpg" alt="Corner Cafe meal"/></div>
+    <div class="gallery-item"><img src="photo_7.jpg" alt="Corner Cafe kitchen"/></div>
   </div>
-</section>
+</div>
 
 <!-- MENU -->
-<section class="menu-section" id="menu">
-  <div class="reveal" style="text-align:center; max-width: 500px; margin: 0 auto 2rem;">
-    <p class="section-tag">What We Serve</p>
-    <h2 class="section-title">Our <span>Menu</span></h2>
-  </div>
-  <div class="menu-tabs">
-    <button class="tab-btn active" onclick="showTab('breakfast',this)">Breakfast</button>
-    <button class="tab-btn" onclick="showTab('lunch',this)">Lunch</button>
-    <button class="tab-btn" onclick="showTab('salads',this)">Salads</button>
-    <button class="tab-btn" onclick="showTab('treats',this)">Baked Goods</button>
-  </div>
-
-  <div class="menu-panel active" id="breakfast">
-    <div class="menu-card"><div class="menu-card-info"><h4>Buttermilk Pancakes</h4><p>Fluffy scratch-made pancakes, golden and warm.</p></div><div class="menu-price">$8</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Breakfast Croissant</h4><p>Egg, melty cheese, ham or bacon on a flaky croissant.</p></div><div class="menu-price">$7</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Bacon, Spinach &amp; Feta Quiche</h4><p>Homemade quiche, baked fresh daily.</p></div><div class="menu-price">Market</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Breakfast Tacos</h4><p>Loaded with egg, cheese, and your choice of protein.</p></div><div class="menu-price">$9</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Classic Omelet</h4><p>Three-egg omelet with your choice of fillings.</p></div><div class="menu-price">$10</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Cinnamon Crunch Muffin</h4><p>Warm, fresh-baked in-house every morning.</p></div><div class="menu-price">$3</div></div>
-  </div>
-
-  <div class="menu-panel" id="lunch">
-    <div class="menu-card"><div class="menu-card-info"><h4>Kickin Chicken Sandwich</h4><p>Spicy fried chicken with fries.</p></div><div class="menu-price">$12</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Corner Burger</h4><p>Juicy beef patty with hand-cut fries or homemade slaw.</p></div><div class="menu-price">$12</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Grilled Cheese</h4><p>Amped-up grilled cheese with your choice of add-ons.</p></div><div class="menu-price">$8</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Soup of the Day</h4><p>Homemade daily — chicken &amp; rice, cheesy cabbage, chili &amp; more.</p></div><div class="menu-price">$5</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Chicken Strip Basket</h4><p>Hand-breaded strips with fries.</p></div><div class="menu-price">$10</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Chicken &amp; Noodles</h4><p>Homemade comfort — served with mashed potatoes and peas.</p></div><div class="menu-price">Special</div></div>
-  </div>
-
-  <div class="menu-panel" id="salads">
-    <div class="menu-card"><div class="menu-card-info"><h4>Oriental Chicken Salad</h4><p>Fresh greens, grilled chicken, crispy wonton, sesame dressing.</p></div><div class="menu-price">$13</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Chicken Bacon Ranch Salad</h4><p>Fresh greens, grilled chicken, bacon, cheddar, homemade ranch.</p></div><div class="menu-price">$13</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Garden Salad</h4><p>Fresh mixed greens with your choice of dressing.</p></div><div class="menu-price">$7</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Cabbage Roll Soup + Salad</h4><p>4-cup soup with garden salad and 2 rolls. Feeds two.</p></div><div class="menu-price">$20</div></div>
-  </div>
-
-  <div class="menu-panel" id="treats">
-    <div class="menu-card"><div class="menu-card-info"><h4>Homemade Pie</h4><p>Rotating lineup — rhubarb, seasonal fruits &amp; more.</p></div><div class="menu-price">Slice</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Triple Chocolate Cake</h4><p>Rich, decadent, made in-house.</p></div><div class="menu-price">Market</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Buttermilk Drop Donuts</h4><p>Warm, fresh, homemade.</p></div><div class="menu-price">Daily</div></div>
-    <div class="menu-card"><div class="menu-card-info"><h4>Cinnamon Crunch Muffins</h4><p>Baked fresh every morning.</p></div><div class="menu-price">$3</div></div>
+<section id="menu">
+  <div class="menu-section">
+    <div class="reveal" style="text-align:center;margin-bottom:48px">
+      <p class="section-label">What We Serve</p>
+      <h2 class="section-title">The Menu</h2>
+      <div class="divider" style="margin:0 auto"></div>
+    </div>
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="switchTab('breakfast',this)">Breakfast</button>
+      <button class="tab-btn" onclick="switchTab('lunch',this)">Lunch</button>
+      <button class="tab-btn" onclick="switchTab('salads',this)">Salads</button>
+      <button class="tab-btn" onclick="switchTab('burgers',this)">Burgers</button>
+    </div>
+    <div id="breakfast" class="tab-pane active reveal">
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Croissant Breakfast Sandwich</h4><span class="menu-price">Market Price</span></div>
+        <p>Flaky croissant with egg, melty cheese, and your choice of ham or bacon.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Breakfast Tacos</h4><span class="menu-price">Market Price</span></div>
+        <p>Loaded with eggs, cheese, and your choice of protein. Served with cheesy potatoes.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Buttermilk Drop Donuts</h4><span class="menu-price">Market Price</span></div>
+        <p>Fresh-made every Friday morning. A Decatur tradition.</p>
+      </div>
+    </div>
+    <div id="lunch" class="tab-pane reveal">
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Hand-Breaded Tenderloin</h4><span class="menu-price">$18.30+</span></div>
+        <p>Real old-fashioned comfort food. Served open-faced, hot with mashed potatoes and gravy.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Chicken Strip Basket</h4><span class="menu-price">$10.00</span></div>
+        <p>Crispy, hand-breaded chicken strips. A lunchtime staple.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Soup of the Day</h4><span class="menu-price">Market Price</span></div>
+        <p>Made fresh daily. Ask your server what's on today.</p>
+      </div>
+    </div>
+    <div id="salads" class="tab-pane reveal">
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Oriental Chicken Salad</h4><span class="menu-price">$13.00</span></div>
+        <p>A crowd favorite. Crisp greens, tender chicken, and a savory sesame dressing.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Chicken Bacon Ranch Salad</h4><span class="menu-price">$13.00</span></div>
+        <p>Fresh greens topped with grilled chicken, crispy bacon, and house ranch.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Spring Salad</h4><span class="menu-price">Market Price</span></div>
+        <p>Seasonal greens with chicken, blueberries, and house vinaigrette.</p>
+      </div>
+    </div>
+    <div id="burgers" class="tab-pane reveal">
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Hamburger</h4><span class="menu-price">$12.00</span></div>
+        <p>A simple, perfect burger. Made with fresh beef on a toasted bun.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>BBQ Bacon Burger</h4><span class="menu-price">$13.50</span></div>
+        <p>Loaded with crispy bacon, tangy BBQ sauce, and all the fixings.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-top"><h4>Mushroom Swiss Burger</h4><span class="menu-price">$13.50</span></div>
+        <p>Sautéed mushrooms, melted Swiss, and our house sauce on a fresh patty.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- TESTIMONIAL -->
-<section class="testimonial-section">
-  <p class="section-tag">What People Say</p>
-  <h2 class="section-title reveal" style="color:#fff;">Guests Love It Here</h2>
-  <blockquote class="reveal">"One of the best meals I've had — homemade food the way it used to be. The pies alone are worth the trip."</blockquote>
-  <p class="quote-author">— Google Reviewer</p>
-</section>
+<div class="testimonial">
+  <div class="quote-mark">"</div>
+  <p class="quote-text reveal">Everything is made from scratch. The pies, the tenderloins — you just don't find cooking like this anymore.</p>
+  <p class="quote-author reveal">— Decatur Local</p>
+</div>
 
 <!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div style="text-align:center;" class="reveal">
-    <p class="section-tag">Come See Us</p>
-    <h2 class="section-title">Find <span>Corner Cafe</span></h2>
+<div class="contact-section" id="contact">
+  <div style="text-align:center" class="reveal">
+    <p class="section-label">Find Us</p>
+    <h2 class="section-title">Come on in</h2>
+    <div class="divider" style="margin:0 auto"></div>
   </div>
   <div class="contact-grid">
     <div class="contact-card reveal">
       <div class="contact-icon">📍</div>
-      <h4>Address</h4>
-      <a href="https://www.google.com/maps/search/?api=1&query=105+N+13th+St+Decatur+IN+46733" target="_blank">105 N 13th St<br>Decatur, IN 46733</a>
+      <h4>Location</h4>
+      <a href="https://maps.google.com/?q=105+N+13th+St+Decatur+IN+46733" target="_blank">105 N 13th St<br>Decatur, IN 46733</a>
     </div>
     <div class="contact-card reveal">
       <div class="contact-icon">📞</div>
@@ -388,53 +394,50 @@
     <div class="contact-card reveal">
       <div class="contact-icon">🕐</div>
       <h4>Hours</h4>
-      <p>Tue – Sat: 7am – 2pm<br>Sunday: 7am – 2pm<br>Monday: Closed</p>
-    </div>
-    <div class="contact-card reveal">
-      <div class="contact-icon">📱</div>
-      <h4>Follow Along</h4>
-      <a href="https://www.facebook.com/cornercafe.decatur" target="_blank">Facebook</a>
+      <a>Tue – Fri: 7am – 2pm<br>Sat: 7am – 2pm<br>Mon: Closed</a>
     </div>
   </div>
-</section>
+</div>
 
+<!-- FOOTER -->
 <footer>
-  <p>&copy; 2026 <strong>Corner Cafe</strong> &mdash; Decatur, Indiana</p>
+  <p>&copy; 2026 Corner Cafe &mdash; 105 N 13th St, Decatur, Indiana</p>
 </footer>
 
 <script>
-  // NAV scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-  // Mobile menu
-  document.getElementById('hamburger').onclick = () => document.getElementById('mobileMenu').classList.add('open');
-  document.getElementById('mobileClose').onclick = () => document.getElementById('mobileMenu').classList.remove('open');
-  document.querySelectorAll('.mob-link').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.remove('open'));
+// Hero slideshow
+let slideIdx=0;
+const slides=document.querySelectorAll('.hero-slide');
+function nextSlide(){
+  slides[slideIdx].classList.remove('active');
+  slideIdx=(slideIdx+1)%slides.length;
+  slides[slideIdx].classList.add('active');
+}
+setInterval(nextSlide,4500);
 
-  // Hero slideshow
-  const slides = document.querySelectorAll('.hero-slide');
-  let cur = 0;
-  setInterval(() => {
-    slides[cur].classList.remove('active');
-    cur = (cur + 1) % slides.length;
-    slides[cur].classList.add('active');
-  }, 5000);
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
 
-  // Menu tabs
-  function showTab(id, btn) {
-    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
-  }
+// Hamburger
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal, .stat, .mosaic-item').forEach(el => observer.observe(el));
+// Tabs
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
